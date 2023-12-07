@@ -14,6 +14,7 @@ class Lotto {
     Validator.validateArray(numbers, Validator.isPositiveNumber);
     LottoValidator.isLottoLength(numbers);
     Validator.validateArray(numbers, LottoValidator.isLottoNumberRange);
+    Validator.isRepeat(numbers);
   }
 
   // 3-1. 각 로또의 당첨 등수를 계산한다.
