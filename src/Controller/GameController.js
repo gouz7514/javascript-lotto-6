@@ -1,12 +1,19 @@
-import OutputView from "../View/OutputView.js";
-
 class GameController {
-  constructor() {
-    this.startGame();
+  #result = {
+    5: 0,
+    4: 0,
+    3: 0,
+    2: 0,
+    1: 0,
+  };
+
+  calculateResult(rank) {
+    this.#result[rank] += 1;
   }
 
-  startGame() {
-    OutputView.printGameStart();
+  getResult() {
+    const result = Object.entries(this.#result).sort((a, b) => b[0] - a[0]);
+    return result;
   }
 }
 

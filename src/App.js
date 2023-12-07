@@ -53,12 +53,18 @@ class App {
     }
   }
 
+  // 3. 로또 추첨을 진행한다.
   #startGame(lottos, luckyNumbers, bonusNumber) {
+    OutputView.printGameStart();
     const gameController = new GameController();
     lottos.forEach((lotto) => {
       const rank = lotto.calculateRank(luckyNumbers, bonusNumber);
-      console.log(rank);
+      if (rank) {
+        gameController.calculateResult(rank);
+      }
     });
+    const gameResult = gameController.getResult();
+    OutputView.printGameResult(gameResult);
   }
 }
 
