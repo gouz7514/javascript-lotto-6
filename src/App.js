@@ -1,7 +1,9 @@
 import InputView from "./View/InputView.js";
-import Validator from "./Validator/Validator.js";
 import OutputView from "./View/OutputView.js";
+import Validator from "./Validator/Validator.js";
+
 import LottoController from "./Controller/LottoController.js";
+import GameController from "./Controller/GameController.js";
 
 class App {
   #lottoController;
@@ -15,6 +17,7 @@ class App {
     const lottos = this.#lottoController.buyLotto(money);
     const luckyNumbers = await this.#getLuckyNumbers();
     const bonusNumber = await this.#getBonusNumber(luckyNumbers);
+    this.#startGame(lottos, luckyNumbers, bonusNumber);
   }
 
   // 1-1. 로또 구입 금액을 입력받는다.
@@ -48,6 +51,14 @@ class App {
       OutputView.printError(error.message);
       return this.#getBonusNumber(luckyNumbers);
     }
+  }
+
+  #startGame(lottos, luckyNumbers, bonusNumber) {
+    const gameController = new GameController();
+    lottos.forEach((lotto) => {
+      const rank = lotto.calculateRank(luckyNumbers, bonusNumber);
+      console.log(rank);
+    });
   }
 }
 

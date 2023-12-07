@@ -9,6 +9,10 @@ const OutputView = {
   },
   printLottoNumbers(lottoNumbers) {
     Console.print(lottoNumbers);
+  },
+  printGameStart() {
+    Console.print("\n당첨 통계");
+    Console.print("---");
   }
 };
 
