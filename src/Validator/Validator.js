@@ -1,3 +1,5 @@
+import LottoValidator from "./LottoValidator.js";
+
 const Validator = {
   validateMoney(value) {
     this.isNumber(value);
@@ -7,14 +9,14 @@ const Validator = {
   validateLuckyNumbers(value) {
     const luckyNumbers = value.split(",").map((v) => Number(v));
     this.validateArray(luckyNumbers, this.isNumber);
-    this.isLottoLength(luckyNumbers);
-    this.validateArray(luckyNumbers, this.isLottoNumberRange);
+    LottoValidator.isLottoLength(luckyNumbers);
+    this.validateArray(luckyNumbers, LottoValidator.isLottoNumberRange);
     this.isRepeat(luckyNumbers);
     return luckyNumbers;
   },
   validateBonusNumber(value, luckyNumbers) {
     this.isNumber(value);
-    this.isLottoNumberRange(value);
+    LottoValidator.isLottoNumberRange(value);
     this.isBonusInLucky(value, luckyNumbers);
     return Number(value);
   },
@@ -33,18 +35,6 @@ const Validator = {
   isDivideByUnit(value) {
     if (Number(value) % 1000 !== 0) {
       throw new Error("[ERROR] 1000원 단위로 입력해주세요.");
-    }
-  },
-  // 6개의 숫자인지 검증
-  isLottoLength(luckyNumbers) {
-    if (luckyNumbers.length !== 6) {
-      throw new Error("[ERROR] 6개의 숫자를 입력해주세요.");
-    }
-  },
-  // 1 ~ 45 사이의 숫자인지 검증
-  isLottoNumberRange(value) {
-    if (value < 1 || value > 45) {
-      throw new Error("[ERROR] 1 ~ 45 사이의 숫자를 입력해주세요.");
     }
   },
   // 중복된 숫자가 있는지 검증
