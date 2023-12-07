@@ -1,15 +1,18 @@
 import InputView from "./View/InputView.js";
 import Validator from "./Validator/Validator.js";
 import OutputView from "./View/OutputView.js";
-import Lotto from "./Lotto.js";
-import generateLotto from "./util/generateLotto.js";
+import LottoController from "./Controller/LottoController.js";
 
 class App {
-  #lottos = [];
+  #lottoController;
+
+  constructor() {
+    this.#lottoController = new LottoController();
+  }
 
   async play() {
     const money = await this.#getMoney();
-    this.#buyLotto(money);
+    const lottos = this.#lottoController.buyLotto(money);
     const luckyNumbers = await this.#getLuckyNumbers();
     const bonusNumber = await this.#getBonusNumber(luckyNumbers);
   }
@@ -23,34 +26,6 @@ class App {
       OutputView.printError(error.message);
       return this.#getMoney();
     }
-  }
-
-  // 2. 로또를 구매한다.
-  #buyLotto(money) {
-    const lottoCount = this.#calculateLottoCount(money);
-    for (let i = 0; i < lottoCount; i += 1) {
-      const lottoNumbers = generateLotto();
-      this.#printLottoNumbers(lottoNumbers);
-      const lotto = new Lotto(lottoNumbers);
-      this.#lottos.push(lotto);
-    }
-  }
-
-  // 2-1. 구매할 로또 수량을 계산한다.
-  #calculateLottoCount(money) {
-    const count = Math.floor(money / 1000);
-    this.#printLottoCount(count);
-    return count;
-  }
-
-  // 2-2. 구매한 로또 수량을 출력한다.
-  #printLottoCount(count) {
-    OutputView.printLottoCount(count);
-  }
-
-  // 2-3. 구매한 로또 번호를 출력한다.
-  #printLottoNumbers(lottoNumbers) {
-    OutputView.printLottoNumbers(lottoNumbers);
   }
 
   // 1-2. 당첨 번호를 입력 받는다.
