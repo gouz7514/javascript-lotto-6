@@ -2,20 +2,20 @@ import LottoValidator from "./LottoValidator.js";
 
 const Validator = {
   validateMoney(value) {
-    this.isNumber(value);
+    this.isPositiveNumber(value);
     this.isDivideByUnit(value);
     return Number(value);
   },
   validateLuckyNumbers(value) {
     const luckyNumbers = value.split(",").map((v) => Number(v));
-    this.validateArray(luckyNumbers, this.isNumber);
+    this.validateArray(luckyNumbers, this.isPositiveNumber);
     LottoValidator.isLottoLength(luckyNumbers);
     this.validateArray(luckyNumbers, LottoValidator.isLottoNumberRange);
     this.isRepeat(luckyNumbers);
     return luckyNumbers;
   },
   validateBonusNumber(value, luckyNumbers) {
-    this.isNumber(value);
+    this.isPositiveNumber(value);
     LottoValidator.isLottoNumberRange(value);
     this.isBonusInLucky(value, luckyNumbers);
     return Number(value);
@@ -26,8 +26,8 @@ const Validator = {
     });
   },
   // 숫자인지 검증
-  isNumber(value) {
-    if (Number.isNaN(Number(value))) {
+  isPositiveNumber(value) {
+    if (Number.isNaN(Number(value)) || Number(value) < 0) {
       throw new Error("[ERROR] 숫자가 잘못된 형식입니다.");
     }
   },

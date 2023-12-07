@@ -10,7 +10,7 @@ class Lotto {
   }
 
   #validate(numbers) {
-    Validator.validateArray(numbers, Validator.isNumber);
+    Validator.validateArray(numbers, Validator.isPositiveNumber);
     LottoValidator.isLottoLength(numbers);
     Validator.validateArray(numbers, LottoValidator.isLottoNumberRange);
   }
