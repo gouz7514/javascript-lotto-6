@@ -2,15 +2,21 @@ const InputValidator = {
   validateMoney(value) {
     this.isNumber(value);
     this.isDivideByUnit(value);
-    return value;
+    return Number(value);
   },
   validateLuckyNumbers(value) {
     const luckyNumbers = value.split(",").map((v) => Number(v));
     this.validateArray(luckyNumbers, this.isNumber);
     this.isLuckyLength(luckyNumbers);
-    this.validateArray(luckyNumbers, this.isLuckyRange);
+    this.validateArray(luckyNumbers, this.isLottoNumberRange);
     this.isRepeat(luckyNumbers);
     return luckyNumbers;
+  },
+  validateBonusNumber(value, luckyNumbers) {
+    this.isNumber(value);
+    this.isLottoNumberRange(value);
+    this.isBonusInLucky(value, luckyNumbers);
+    return Number(value);
   },
   validateArray(array, callback) {
     array.forEach((value) => {
@@ -19,7 +25,7 @@ const InputValidator = {
   },
   // 숫자인지 검증
   isNumber(value) {
-    if (Number.isNaN(value)) {
+    if (Number.isNaN(Number(value))) {
       throw new Error("[ERROR] 숫자가 잘못된 형식입니다.");
     }
   },
@@ -36,7 +42,7 @@ const InputValidator = {
     }
   },
   // 1 ~ 45 사이의 숫자인지 검증
-  isLuckyRange(value) {
+  isLottoNumberRange(value) {
     if (value < 1 || value > 45) {
       throw new Error("[ERROR] 1 ~ 45 사이의 숫자를 입력해주세요.");
     }
@@ -46,6 +52,12 @@ const InputValidator = {
     const set = new Set(luckyNumbers);
     if (set.size !== 6) {
       throw new Error("[ERROR] 중복된 숫자가 있습니다.");
+    }
+  },
+  // 보너스 숫자가 당첨 번호에 있는지 검증
+  isBonusInLucky(value, luckyNumbers) {
+    if (luckyNumbers.includes(Number(value))) {
+      throw new Error("[ERROR] 보너스 숫자가 당첨 번호에 있습니다.");
     }
   }
 };
