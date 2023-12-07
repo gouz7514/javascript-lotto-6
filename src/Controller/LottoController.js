@@ -31,7 +31,7 @@ class LottoController {
 
   // 2-3. 구매한 로또 번호를 출력한다.
   #printLottoNumbers(lottoNumbers) {
-    OutputView.printLottoNumbers(lottoNumbers);
+    OutputView.printLottoNumbers(`[${lottoNumbers.join(", ")}]`);
   }
 }
 
