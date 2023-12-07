@@ -1,5 +1,5 @@
 import InputView from "./View/InputView.js";
-import InputValidator from "./Validator/InputValidator.js";
+import Validator from "./Validator/Validator.js";
 import OutputView from "./View/OutputView.js";
 import Lotto from "./Lotto.js";
 import generateLotto from "./util/generateLotto.js";
@@ -17,7 +17,7 @@ class App {
   // 1-1. 로또 구입 금액을 입력받는다.
   async #getMoney() {
     try {
-      const money = InputValidator.validateMoney(await InputView.getMoney());
+      const money = Validator.validateMoney(await InputView.getMoney());
       return money;
     } catch (error) {
       OutputView.printError(error.message);
@@ -56,7 +56,7 @@ class App {
   // 1-2. 당첨 번호를 입력 받는다.
   async #getLuckyNumbers() {
     try {
-      const luckyNumbers = InputValidator.validateLuckyNumbers(await InputView.getLuckyNumbers());
+      const luckyNumbers = Validator.validateLuckyNumbers(await InputView.getLuckyNumbers());
       return luckyNumbers;
     } catch (error) {
       OutputView.printError(error.message);
@@ -67,7 +67,7 @@ class App {
   // 1-3. 보너스 번호를 입력 받는다.
   async #getBonusNumber(luckyNumbers) {
     try {
-      const bonusNumber = InputValidator.validateBonusNumber(await InputView.getBonusNumber(), luckyNumbers);
+      const bonusNumber = Validator.validateBonusNumber(await InputView.getBonusNumber(), luckyNumbers);
       return bonusNumber;
     } catch (error) {
       OutputView.printError(error.message);

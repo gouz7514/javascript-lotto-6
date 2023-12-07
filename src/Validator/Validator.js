@@ -1,4 +1,4 @@
-const InputValidator = {
+const Validator = {
   validateMoney(value) {
     this.isNumber(value);
     this.isDivideByUnit(value);
@@ -7,7 +7,7 @@ const InputValidator = {
   validateLuckyNumbers(value) {
     const luckyNumbers = value.split(",").map((v) => Number(v));
     this.validateArray(luckyNumbers, this.isNumber);
-    this.isLuckyLength(luckyNumbers);
+    this.isLottoLength(luckyNumbers);
     this.validateArray(luckyNumbers, this.isLottoNumberRange);
     this.isRepeat(luckyNumbers);
     return luckyNumbers;
@@ -36,7 +36,7 @@ const InputValidator = {
     }
   },
   // 6개의 숫자인지 검증
-  isLuckyLength(luckyNumbers) {
+  isLottoLength(luckyNumbers) {
     if (luckyNumbers.length !== 6) {
       throw new Error("[ERROR] 6개의 숫자를 입력해주세요.");
     }
@@ -62,4 +62,4 @@ const InputValidator = {
   }
 };
 
-export default InputValidator;
+export default Validator;
