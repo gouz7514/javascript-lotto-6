@@ -22,7 +22,11 @@ const OutputView = {
       const prize = LOTTO_RESULT[rank].prize.toLocaleString();
       Console.print(`${matchString} (${prize}원) - ${count}개`);
     });
-  }
+  },
+  // 3-3. 수익률을 출력한다.
+  printProfitRate(profitRate) {
+    Console.print(`총 수익률은 ${profitRate.toLocaleString()}%입니다.`);
+  },
 };
 
 export default OutputView;

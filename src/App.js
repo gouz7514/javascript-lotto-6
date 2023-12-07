@@ -7,9 +7,11 @@ import GameController from "./Controller/GameController.js";
 
 class App {
   #lottoController;
+  #gameController;
 
   constructor() {
     this.#lottoController = new LottoController();
+    this.#gameController = new GameController();
   }
 
   async play() {
@@ -17,7 +19,7 @@ class App {
     const lottos = this.#lottoController.buyLotto(money);
     const luckyNumbers = await this.#getLuckyNumbers();
     const bonusNumber = await this.#getBonusNumber(luckyNumbers);
-    this.#startGame(lottos, luckyNumbers, bonusNumber);
+    this.#startGame(lottos, luckyNumbers, bonusNumber, money);
   }
 
   // 1-1. 로또 구입 금액을 입력받는다.
@@ -54,17 +56,28 @@ class App {
   }
 
   // 3. 로또 추첨을 진행한다.
-  #startGame(lottos, luckyNumbers, bonusNumber) {
+  #startGame(lottos, luckyNumbers, bonusNumber, money) {
     OutputView.printGameStart();
-    const gameController = new GameController();
     lottos.forEach((lotto) => {
       const rank = lotto.calculateRank(luckyNumbers, bonusNumber);
       if (rank) {
-        gameController.calculateResult(rank);
+        this.#gameController.calculateResult(rank);
       }
     });
-    const gameResult = gameController.getResult();
+    this.#printGameResult();
+    this.#printProfitRate(money);
+  }
+
+  // 3-2. 당첨 통계를 출력한다.
+  #printGameResult() {
+    const gameResult = this.#gameController.getResult();
     OutputView.printGameResult(gameResult);
+  }
+
+  // 3-3. 수익률을 출력한다.
+  #printProfitRate(money) {
+    const profitRate = this.#gameController.getProfitRate(money);
+    OutputView.printProfitRate(profitRate);
   }
 }
 
